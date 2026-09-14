@@ -1,32 +1,27 @@
 # ActionPiece
 
-**Rethinking Action Tokenization for Autoregressive Vision-Language-Action Models**
+Rethinking Action Tokenization for Autoregressive Vision-Language-Action Models
+
+[Project page](https://deepcybo-physai.github.io/ActionPiece/)
 
 ## Abstract
 
-Action reconstruction fidelity and physical consistency are both important for closed-loop robot control. Across 61 matched tokenizer–benchmark evaluations, both properties are associated with policy success, while neither alone fully explains the observed performance. ActionPiece achieves 94.80% on LIBERO, 68.77% on unseen LIBERO-Plus, 71.9% on SimplerEnv, and 51.45% mean success across VLA-Arena L0–L2.
+Action tokenizers define the action representations learned by autoregressive vision-language-action models. Reconstruction accuracy measures the fidelity of individual actions, while their physical relationships provide structure for learning across demonstrations. We introduce physical rank consistency (PRC) to measure neighborhood-order preservation through encoding and decoding, providing a common evaluation across token vocabularies and decoder architectures. Guided by this perspective, we develop ActionPiece, which jointly augments reconstruction with physical rank preservation in learned representations and quantization regularization over codeword assignments. Under the same Qwen3-VL-4B policy training setup, ActionPiece achieves 94.8% on LIBERO and 68.8% on unseen LIBERO-Plus. Component ablations improve both PRC and policy success, with the two objectives together performing best. Replacing the action tokenizer also achieves 71.9% on SimplerEnv and 51.5% mean success across VLA-Arena L0–L2 with standard next-token prediction. These results support physical relationship supervision as a useful principle for learning action representations for control.
 
-[PhysBrain1.5](https://huggingface.co/collections/DeepCybo/physbrain-15) uses **ActionPiece** as its **action tokenizer**.
+[PhysBrain1.5](https://huggingface.co/collections/DeepCybo/physbrain-15) uses ActionPiece as its action tokenizer.
 
-## Key Insight
+## Benchmark results
 
-**Fidelity and physical consistency both matter.** Both are positively associated with closed-loop success across matched evaluations. Neither property alone fully determines performance.
-
-![Fidelity and physical consistency](docs/assets/fig1.svg)
-
-Ranks are normalized within each comparison cohort; color indicates the benchmark. These associations do not establish causation.
-
-## Benchmark Results
-
-| Benchmark | ActionPiece success rate |
+| Benchmark | ActionPiece success (%) |
 | --- | ---: |
-| LIBERO | 94.80% |
-| LIBERO-Plus | 68.77% |
-| SimplerEnv | 71.9% |
-| VLA-Arena L0 | 82.18% |
-| VLA-Arena L1 | 42.73% |
-| VLA-Arena L2 | 29.45% |
-| VLA-Arena overall | 51.45% |
+| LIBERO | 94.8 |
+| LIBERO-Plus | 68.8 |
+| SimplerEnv | 71.9 |
+| VLA-Arena L0 / L1 / L2 | 82.2 / 42.7 / 29.5 |
+| VLA-Arena overall | 51.5 |
 
-LIBERO-Plus demonstrations are excluded from policy training. VLA-Arena averages 11 task suites equally at each level and all 33 suite–level cells overall. The project page includes the full comparisons, with updated LingBot-VLA and Motus results.
+The project page contains the full comparisons. LIBERO-Plus is evaluated without its demonstrations in policy training. SimplerEnv scores average five independent 24-episode repeats per task. VLA-Arena averages the 11 suites equally at each level.
 
+## Key insight
+
+PRC measures neighborhood-order preservation through encoding and decoding. The project figure compares fidelity and PRC with policy success using within-group ranks across 55 tokenizer–benchmark evaluations, and presents a matched LIBERO-Plus comparison.

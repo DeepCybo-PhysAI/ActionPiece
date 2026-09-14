@@ -1,2 +1,1641 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><meta content="noindex,nofollow" name="robots"/><title>ActionPiece</title><meta content="ActionPiece results on LIBERO, SimplerEnv and VLA-Arena. Fidelity and physical consistency both matter." name="description"/><link href="assets/style.css" rel="stylesheet"/></head><body><header class="masthead"><nav aria-label="Sections"><a href="#abstract">Abstract</a><a href="#key-insight">Key Insight</a><a href="#libero">LIBERO</a><a href="#simpler">SimplerEnv</a><a href="#arena">VLA-Arena</a></nav></header><main><section class="intro" id="abstract"><div class="institution-brand"><div class="brand-crop"><img alt="DeepCybo" height="470" src="assets/institution-logo.png" width="6217"/></div><div class="institution-names"><span>Zhongguancun Academy</span><span>Zhongguancun Institute of Artificial Intelligence</span></div></div><h1><span class="project-name">ActionPiece</span>Rethinking Action Tokenization for<br class="desktop"/> Autoregressive Vision-Language-Action Models</h1><div aria-label="Project resources" class="publication-links"><button disabled="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18"></path></svg><span>Code</span><span class="coming-soon">Coming Soon</span></button><button disabled="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="M14 2H5v20h14V7zM14 2v6h5M8 12h8M8 16h8"></path></svg><span>Paper</span><span class="coming-soon">Coming Soon</span></button><button disabled="" type="button"><svg aria-hidden="true" viewbox="0 0 24 24"><path d="m12 2 10 5v10l-10 5-10-5V7zm0 10 10-5M12 12 2 7m10 5v10"></path></svg><span>Model</span><span class="coming-soon">Coming Soon</span></button></div><div class="abstract"><h2>Abstract</h2><p>Action reconstruction fidelity and physical consistency are both important for closed-loop robot control. Across 61 matched tokenizer–benchmark evaluations, both properties are associated with policy success, while neither alone fully explains the observed performance. ActionPiece achieves <b>94.80%</b> on LIBERO, <b>68.77%</b> on unseen LIBERO-Plus, <b>71.9%</b> on SimplerEnv, and <b>51.45%</b> mean success across VLA-Arena L0–L2. These results highlight the importance of considering fidelity and physical consistency together when evaluating action representations.</p><p class="adoption-note"><a href="https://huggingface.co/collections/DeepCybo/physbrain-15">PhysBrain1.5</a> uses ActionPiece as its action tokenizer.</p></div></section><section id="key-insight"><div class="section-heading"><h2>Fidelity and physical consistency<br/>both matter.</h2></div><figure><img alt="Across 61 matched evaluations, fidelity rank correlates with success rank at 0.68, and physical consistency rank correlates at 0.76." height="461" src="assets/fig1.svg" width="1113"/><figcaption><b>Fidelity &amp; Physical Consistency.</b> Both fidelity and physical consistency are positively associated with closed-loop success across 61 matched evaluations. Ranks are normalized within each comparison cohort; color indicates the benchmark. These associations do not establish causation or imply that either property alone determines performance.</figcaption></figure></section><section id="libero"><div class="section-heading"><h2>LIBERO <span class="muted">&amp; LIBERO-Plus</span></h2><p>Task performance and generalization to unseen evaluation conditions.</p></div><div class="chart-pair"><article><div class="chart-heading"><h3>LIBERO</h3><span>Overall success ↑</span></div><div class="bars"><div class="bar-row ours"><span class="bar-label">ActionPiece</span><div class="track"><span style="width:94.8%"></span></div><strong>94.80<small>%</small></strong></div><div class="bar-row"><span class="bar-label">ActionCodec</span><div class="track"><span style="width:94.4%"></span></div><strong>94.40<small>%</small></strong></div><div class="bar-row"><span class="bar-label">FASTerVQ*</span><div class="track"><span style="width:87.35%"></span></div><strong>87.35<small>%</small></strong></div><div class="bar-row"><span class="bar-label">OAT</span><div class="track"><span style="width:86.05%"></span></div><strong>86.05<small>%</small></strong></div></div></article><article><div class="chart-heading"><h3>LIBERO-Plus</h3><span>Overall success ↑</span></div><div class="bars"><div class="bar-row ours"><span class="bar-label">ActionPiece</span><div class="track"><span style="width:68.77%"></span></div><strong>68.77<small>%</small></strong></div><div class="bar-row"><span class="bar-label">ActionCodec</span><div class="track"><span style="width:64.23%"></span></div><strong>64.23<small>%</small></strong></div><div class="bar-row"><span class="bar-label">FASTerVQ*</span><div class="track"><span style="width:62.26%"></span></div><strong>62.26<small>%</small></strong></div><div class="bar-row"><span class="bar-label">OAT</span><div class="track"><span style="width:60.67%"></span></div><strong>60.67<small>%</small></strong></div></div></article></div><h3 class="table-title">LIBERO · success rate (%)</h3><div aria-label="Tokenizer, Spatial, Object, Goal, Long, Overall results" class="table-scroll" role="region" tabindex="0"><table><thead><tr><th scope="col">Tokenizer</th><th scope="col">Spatial</th><th scope="col">Object</th><th scope="col">Goal</th><th scope="col">Long</th><th scope="col">Overall</th></tr></thead><tbody><tr class=""><th scope="row">ActionCodec</th><td>93.40</td><td>99.00</td><td>95.40</td><td>89.80</td><td>94.40</td></tr><tr class=""><th scope="row">OAT</th><td>85.60</td><td>96.20</td><td>87.20</td><td>75.20</td><td>86.05</td></tr><tr class=""><th scope="row">FASTerVQ*</th><td>81.80</td><td>95.60</td><td>85.00</td><td>87.00</td><td>87.35</td></tr><tr class="ours"><th scope="row">ActionPiece</th><td>96.20</td><td>99.00</td><td>93.40</td><td>90.60</td><td>94.80</td></tr></tbody></table></div><h3 class="table-title">LIBERO-Plus · success rate (%)</h3><div aria-label="Tokenizer, Camera, Robot, Language, Light, Background, Noise, Layout, Overall results" class="table-scroll" role="region" tabindex="0"><table><thead><tr><th scope="col">Tokenizer</th><th scope="col">Camera</th><th scope="col">Robot</th><th scope="col">Language</th><th scope="col">Light</th><th scope="col">Background</th><th scope="col">Noise</th><th scope="col">Layout</th><th scope="col">Overall</th></tr></thead><tbody><tr class=""><th scope="row">ActionCodec</th><td>33.27</td><td>38.84</td><td>80.81</td><td>88.44</td><td>90.15</td><td>58.03</td><td>75.87</td><td>64.23</td></tr><tr class=""><th scope="row">OAT</th><td>32.21</td><td>47.81</td><td>79.51</td><td>82.84</td><td>82.71</td><td>46.41</td><td>67.41</td><td>60.67</td></tr><tr class=""><th scope="row">FASTerVQ*</th><td>39.02</td><td>40.32</td><td>74.50</td><td>85.81</td><td>84.85</td><td>56.59</td><td>68.98</td><td>62.26</td></tr><tr class="ours"><th scope="row">ActionPiece</th><td>45.09</td><td>49.61</td><td>82.24</td><td>91.94</td><td>91.36</td><td>57.59</td><td>77.97</td><td>68.77</td></tr></tbody></table></div><p class="note">Matched policy comparison. LIBERO-Plus demonstrations are excluded from policy training. FASTerVQ* denotes a reproduction of the published method.</p></section><section id="simpler"><div class="section-heading"><h2>SimplerEnv</h2><p>WidowX task success in simulation.</p></div><div class="result-callout"><div><span class="metric">71.9<small>%</small></span><span>ActionPiece · average success</span></div><p>Four manipulation tasks:<br/>Put Spoon, Put Carrot, Stack Block, Put Eggplant.</p></div><div aria-label="Model, Put Spoon, Put Carrot, Stack Block, Put Eggplant, Avg. results" class="table-scroll" role="region" tabindex="0"><table><thead><tr><th scope="col">Model</th><th scope="col">Put Spoon</th><th scope="col">Put Carrot</th><th scope="col">Stack Block</th><th scope="col">Put Eggplant</th><th scope="col">Avg.</th></tr></thead><tbody><tr class=""><th scope="row">RT-1-X</th><td>0.0</td><td>4.2</td><td>0.0</td><td>0.0</td><td>1.1</td></tr><tr class=""><th scope="row">Octo-Base</th><td>0.0</td><td>12.5</td><td>15.8</td><td>41.7</td><td>17.5</td></tr><tr class=""><th scope="row">Octo-Small</th><td>0.0</td><td>8.2</td><td>41.7</td><td>56.7</td><td>26.7</td></tr><tr class=""><th scope="row">OpenVLA-OFT</th><td>34.2</td><td>30.0</td><td>30.0</td><td>72.5</td><td>41.8</td></tr><tr class=""><th scope="row">RoboVLM</th><td>50.0</td><td>37.5</td><td>0.0</td><td>83.3</td><td>42.7</td></tr><tr class=""><th scope="row">Magma</th><td>37.5</td><td>29.2</td><td>20.8</td><td>91.7</td><td>44.8</td></tr><tr class=""><th scope="row">CogACT</th><td>71.7</td><td>50.8</td><td>15.0</td><td>67.5</td><td>51.3</td></tr><tr class=""><th scope="row">SpatialVLA</th><td>20.8</td><td>20.8</td><td>25.0</td><td>70.8</td><td>34.4</td></tr><tr class=""><th scope="row">TraceVLA</th><td>12.5</td><td>16.6</td><td>16.6</td><td>65.0</td><td>27.7</td></tr><tr class=""><th scope="row">VideoVLA</th><td>75.0</td><td>20.8</td><td>45.8</td><td>70.8</td><td>53.1</td></tr><tr class=""><th scope="row">π₀</th><td>29.2</td><td>62.5</td><td>29.2</td><td>91.6</td><td>53.1</td></tr><tr class=""><th scope="row">π₀.₅</th><td>49.3</td><td>64.7</td><td>44.7</td><td>69.7</td><td>57.1</td></tr><tr class=""><th scope="row">Isaac-GR00T-N1.6-Bridge</th><td>64.5</td><td>65.5</td><td>5.5</td><td>93.0</td><td>57.1</td></tr><tr class=""><th scope="row">LangForce</th><td>89.6</td><td>63.8</td><td>33.3</td><td>79.2</td><td>66.5</td></tr><tr class=""><th scope="row">QwenGR00T + Qwen3-VL-4B</th><td>87.5</td><td>50.0</td><td>29.2</td><td>54.2</td><td>55.2</td></tr><tr class="ours"><th scope="row">ActionPiece</th><td>83.3</td><td>54.2</td><td>58.3</td><td>91.7</td><td>71.9</td></tr></tbody></table></div><p class="note">Success rates (%). Five independent 24-episode repeats per task.</p></section><section id="arena"><div class="section-heading"><h2>VLA-Arena</h2><p>Safety, distractors, extrapolation and long-horizon tasks across L0–L2.</p></div><div class="chart-pair arena-overview"><article><div class="chart-heading"><h3>Across all levels</h3><span>Mean success ↑</span></div><div class="bars"><div class="bar-row ours"><span class="bar-label">ActionPiece</span><div class="track"><span style="width:51.45454545454546%"></span></div><strong>51.45<small>%</small></strong></div><div class="bar-row"><span class="bar-label">LingBot-VLA</span><div class="track"><span style="width:50.96969696969697%"></span></div><strong>50.97<small>%</small></strong></div><div class="bar-row"><span class="bar-label">π₀.₅</span><div class="track"><span style="width:41.484848484848484%"></span></div><strong>41.48<small>%</small></strong></div><div class="bar-row"><span class="bar-label">Motus</span><div class="track"><span style="width:38.90909090909091%"></span></div><strong>38.91<small>%</small></strong></div><div class="bar-row"><span class="bar-label">Qwen3-VL-GR00T</span><div class="track"><span style="width:37.63636363636363%"></span></div><strong>37.64<small>%</small></strong></div><div class="bar-row"><span class="bar-label">Qwen3-VL-PI</span><div class="track"><span style="width:34.06060606060606%"></span></div><strong>34.06<small>%</small></strong></div><div class="bar-row"><span class="bar-label">Qwen3-VL-OFT</span><div class="track"><span style="width:33.3939393939394%"></span></div><strong>33.39<small>%</small></strong></div><div class="bar-row"><span class="bar-label">GR00T-N1.6</span><div class="track"><span style="width:27.787878787878793%"></span></div><strong>27.79<small>%</small></strong></div></div></article><article><div class="chart-heading"><h3>By difficulty</h3><span>Success rate (%) ↑</span></div><div aria-label="Model, L0, L1, L2 results" class="table-scroll" role="region" tabindex="0"><table><thead><tr><th scope="col">Model</th><th scope="col">L0</th><th scope="col">L1</th><th scope="col">L2</th></tr></thead><tbody><tr class=""><th scope="row">π₀.₅</th><td>64.27</td><td>35.64</td><td>24.55</td></tr><tr class=""><th scope="row">GR00T-N1.6</th><td>50.27</td><td>23.64</td><td>9.45</td></tr><tr class=""><th scope="row">Qwen3-VL-OFT</th><td>72.00</td><td>19.64</td><td>8.55</td></tr><tr class=""><th scope="row">Qwen3-VL-GR00T</th><td>76.91</td><td>23.45</td><td>12.55</td></tr><tr class=""><th scope="row">Qwen3-VL-PI</th><td>64.00</td><td>25.27</td><td>12.91</td></tr><tr class=""><th scope="row">LingBot-VLA</th><td>90.91</td><td>38.64</td><td>23.36</td></tr><tr class=""><th scope="row">Motus</th><td>60.09</td><td>35.73</td><td>20.91</td></tr><tr class="ours"><th scope="row">ActionPiece</th><td>82.18</td><td>42.73</td><td>29.45</td></tr></tbody></table></div></article></div><p class="note">Equal-weight mean over 11 task suites at each level; the overall score averages all 33 suite–level cells. Means are recalculated from the displayed success rates. LingBot-VLA and Motus use the updated comparison values.</p><h3 class="table-title">Task-level success rates</h3><p class="note">Each cell lists L0 / L1 / L2 (%). Safety rows show task success, not cumulative cost.</p><div aria-label="VLA-Arena task level success rates" class="table-scroll arena-detail" role="region" tabindex="0"><table><thead><tr><th scope="col">Task suite</th><th class="" scope="col">π₀.₅</th><th class="" scope="col">GR00T-N1.6</th><th class="" scope="col">Qwen3-VL-OFT</th><th class="" scope="col">Qwen3-VL-GR00T</th><th class="" scope="col">Qwen3-VL-PI</th><th class="" scope="col">LingBot-VLA</th><th class="" scope="col">Motus</th><th class="ours" scope="col">ActionPiece</th></tr></thead><tbody><tr><th scope="row">Static Obstacles</th><td class=""><span>90</span><span><span class="separator"> / </span>62</span><span><span class="separator"> / </span>40</span></td><td class=""><span>72</span><span><span class="separator"> / </span>30</span><span><span class="separator"> / </span>14</span></td><td class=""><span>84</span><span><span class="separator"> / </span>14</span><span><span class="separator"> / </span>8</span></td><td class=""><span>91</span><span><span class="separator"> / </span>18</span><span><span class="separator"> / </span>5</span></td><td class=""><span>62</span><span><span class="separator"> / </span>24</span><span><span class="separator"> / </span>16</span></td><td class=""><span>100</span><span><span class="separator"> / </span>57</span><span><span class="separator"> / </span>41</span></td><td class=""><span>64</span><span><span class="separator"> / </span>67</span><span><span class="separator"> / </span>41</span></td><td class="ours"><span>91</span><span><span class="separator"> / </span>83</span><span><span class="separator"> / </span>57</span></td></tr><tr><th scope="row">Cautious Grasp</th><td class=""><span>50</span><span><span class="separator"> / </span>14</span><span><span class="separator"> / </span>0</span></td><td class=""><span>16</span><span><span class="separator"> / </span>2</span><span><span class="separator"> / </span>0</span></td><td class=""><span>86</span><span><span class="separator"> / </span>4</span><span><span class="separator"> / </span>0</span></td><td class=""><span>77</span><span><span class="separator"> / </span>8</span><span><span class="separator"> / </span>2</span></td><td class=""><span>80</span><span><span class="separator"> / </span>20</span><span><span class="separator"> / </span>0</span></td><td class=""><span>92</span><span><span class="separator"> / </span>32</span><span><span class="separator"> / </span>1</span></td><td class=""><span>62</span><span><span class="separator"> / </span>25</span><span><span class="separator"> / </span>11</span></td><td class="ours"><span>77</span><span><span class="separator"> / </span>18</span><span><span class="separator"> / </span>1</span></td></tr><tr><th scope="row">Hazard Avoidance</th><td class=""><span>58</span><span><span class="separator"> / </span>30</span><span><span class="separator"> / </span>36</span></td><td class=""><span>64</span><span><span class="separator"> / </span>4</span><span><span class="separator"> / </span>10</span></td><td class=""><span>50</span><span><span class="separator"> / </span>12</span><span><span class="separator"> / </span>4</span></td><td class=""><span>67</span><span><span class="separator"> / </span>15</span><span><span class="separator"> / </span>19</span></td><td class=""><span>54</span><span><span class="separator"> / </span>16</span><span><span class="separator"> / </span>14</span></td><td class=""><span>86</span><span><span class="separator"> / </span>3</span><span><span class="separator"> / </span>26</span></td><td class=""><span>65</span><span><span class="separator"> / </span>34</span><span><span class="separator"> / </span>21</span></td><td class="ours"><span>68</span><span><span class="separator"> / </span>22</span><span><span class="separator"> / </span>46</span></td></tr><tr><th scope="row">State Preservation</th><td class=""><span>58</span><span><span class="separator"> / </span>56</span><span><span class="separator"> / </span>54</span></td><td class=""><span>66</span><span><span class="separator"> / </span>50</span><span><span class="separator"> / </span>38</span></td><td class=""><span>90</span><span><span class="separator"> / </span>40</span><span><span class="separator"> / </span>30</span></td><td class=""><span>86</span><span><span class="separator"> / </span>56</span><span><span class="separator"> / </span>47</span></td><td class=""><span>78</span><span><span class="separator"> / </span>50</span><span><span class="separator"> / </span>52</span></td><td class=""><span>97</span><span><span class="separator"> / </span>80</span><span><span class="separator"> / </span>64</span></td><td class=""><span>63</span><span><span class="separator"> / </span>63</span><span><span class="separator"> / </span>72</span></td><td class="ours"><span>94</span><span><span class="separator"> / </span>80</span><span><span class="separator"> / </span>64</span></td></tr><tr><th scope="row">Dynamic Obstacles</th><td class=""><span>50</span><span><span class="separator"> / </span>44</span><span><span class="separator"> / </span>22</span></td><td class=""><span>74</span><span><span class="separator"> / </span>50</span><span><span class="separator"> / </span>2</span></td><td class=""><span>64</span><span><span class="separator"> / </span>48</span><span><span class="separator"> / </span>8</span></td><td class=""><span>81</span><span><span class="separator"> / </span>56</span><span><span class="separator"> / </span>3</span></td><td class=""><span>60</span><span><span class="separator"> / </span>36</span><span><span class="separator"> / </span>12</span></td><td class=""><span>95</span><span><span class="separator"> / </span>83</span><span><span class="separator"> / </span>20</span></td><td class=""><span>58</span><span><span class="separator"> / </span>33</span><span><span class="separator"> / </span>11</span></td><td class="ours"><span>82</span><span><span class="separator"> / </span>76</span><span><span class="separator"> / </span>27</span></td></tr><tr><th scope="row">Static Distractors</th><td class=""><span>88</span><span><span class="separator"> / </span>16</span><span><span class="separator"> / </span>16</span></td><td class=""><span>46</span><span><span class="separator"> / </span>32</span><span><span class="separator"> / </span>6</span></td><td class=""><span>82</span><span><span class="separator"> / </span>6</span><span><span class="separator"> / </span>2</span></td><td class=""><span>91</span><span><span class="separator"> / </span>6</span><span><span class="separator"> / </span>2</span></td><td class=""><span>80</span><span><span class="separator"> / </span>14</span><span><span class="separator"> / </span>2</span></td><td class=""><span>99</span><span><span class="separator"> / </span>21</span><span><span class="separator"> / </span>26</span></td><td class=""><span>69</span><span><span class="separator"> / </span>19</span><span><span class="separator"> / </span>13</span></td><td class="ours"><span>92</span><span><span class="separator"> / </span>21</span><span><span class="separator"> / </span>22</span></td></tr><tr><th scope="row">Dynamic Distractors</th><td class=""><span>80</span><span><span class="separator"> / </span>66</span><span><span class="separator"> / </span>54</span></td><td class=""><span>70</span><span><span class="separator"> / </span>72</span><span><span class="separator"> / </span>18</span></td><td class=""><span>82</span><span><span class="separator"> / </span>48</span><span><span class="separator"> / </span>20</span></td><td class=""><span>92</span><span><span class="separator"> / </span>49</span><span><span class="separator"> / </span>25</span></td><td class=""><span>90</span><span><span class="separator"> / </span>56</span><span><span class="separator"> / </span>30</span></td><td class=""><span>100</span><span><span class="separator"> / </span>79</span><span><span class="separator"> / </span>43</span></td><td class=""><span>77</span><span><span class="separator"> / </span>51</span><span><span class="separator"> / </span>26</span></td><td class="ours"><span>90</span><span><span class="separator"> / </span>63</span><span><span class="separator"> / </span>43</span></td></tr><tr><th scope="row">Preposition Combinations</th><td class=""><span>62</span><span><span class="separator"> / </span>24</span><span><span class="separator"> / </span>6</span></td><td class=""><span>48</span><span><span class="separator"> / </span>0</span><span><span class="separator"> / </span>0</span></td><td class=""><span>54</span><span><span class="separator"> / </span>0</span><span><span class="separator"> / </span>0</span></td><td class=""><span>51</span><span><span class="separator"> / </span>1</span><span><span class="separator"> / </span>0</span></td><td class=""><span>38</span><span><span class="separator"> / </span>0</span><span><span class="separator"> / </span>0</span></td><td class=""><span>73</span><span><span class="separator"> / </span>5</span><span><span class="separator"> / </span>0</span></td><td class=""><span>41</span><span><span class="separator"> / </span>7</span><span><span class="separator"> / </span>1</span></td><td class="ours"><span>69</span><span><span class="separator"> / </span>15</span><span><span class="separator"> / </span>0</span></td></tr><tr><th scope="row">Task Workflows</th><td class=""><span>38</span><span><span class="separator"> / </span>20</span><span><span class="separator"> / </span>22</span></td><td class=""><span>42</span><span><span class="separator"> / </span>0</span><span><span class="separator"> / </span>0</span></td><td class=""><span>42</span><span><span class="separator"> / </span>20</span><span><span class="separator"> / </span>16</span></td><td class=""><span>51</span><span><span class="separator"> / </span>3</span><span><span class="separator"> / </span>9</span></td><td class=""><span>46</span><span><span class="separator"> / </span>2</span><span><span class="separator"> / </span>10</span></td><td class=""><span>67</span><span><span class="separator"> / </span>3</span><span><span class="separator"> / </span>20</span></td><td class=""><span>38</span><span><span class="separator"> / </span>25</span><span><span class="separator"> / </span>14</span></td><td class="ours"><span>64</span><span><span class="separator"> / </span>33</span><span><span class="separator"> / </span>21</span></td></tr><tr><th scope="row">Unseen Objects</th><td class=""><span>48</span><span><span class="separator"> / </span>60</span><span><span class="separator"> / </span>20</span></td><td class=""><span>26</span><span><span class="separator"> / </span>18</span><span><span class="separator"> / </span>16</span></td><td class=""><span>60</span><span><span class="separator"> / </span>24</span><span><span class="separator"> / </span>6</span></td><td class=""><span>63</span><span><span class="separator"> / </span>46</span><span><span class="separator"> / </span>26</span></td><td class=""><span>40</span><span><span class="separator"> / </span>60</span><span><span class="separator"> / </span>6</span></td><td class=""><span>91</span><span><span class="separator"> / </span>60</span><span><span class="separator"> / </span>16</span></td><td class=""><span>63</span><span><span class="separator"> / </span>65</span><span><span class="separator"> / </span>19</span></td><td class="ours"><span>78</span><span><span class="separator"> / </span>59</span><span><span class="separator"> / </span>43</span></td></tr><tr><th scope="row">Long Horizon</th><td class=""><span>85</span><span><span class="separator"> / </span>0</span><span><span class="separator"> / </span>0</span></td><td class=""><span>29</span><span><span class="separator"> / </span>2</span><span><span class="separator"> / </span>0</span></td><td class=""><span>98</span><span><span class="separator"> / </span>0</span><span><span class="separator"> / </span>0</span></td><td class=""><span>96</span><span><span class="separator"> / </span>0</span><span><span class="separator"> / </span>0</span></td><td class=""><span>76</span><span><span class="separator"> / </span>0</span><span><span class="separator"> / </span>0</span></td><td class=""><span>100</span><span><span class="separator"> / </span>2</span><span><span class="separator"> / </span>0</span></td><td class=""><span>61</span><span><span class="separator"> / </span>4</span><span><span class="separator"> / </span>1</span></td><td class="ours"><span>99</span><span><span class="separator"> / </span>0</span><span><span class="separator"> / </span>0</span></td></tr></tbody></table></div></section></main><footer>ActionPiece<span>Benchmark results</span></footer></body></html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1" name="viewport"/>
+  <meta content="noindex,nofollow" name="robots"/>
+  <title>
+   ActionPiece
+  </title>
+  <meta content="ActionPiece: physical rank consistency and structure-preserving action tokenization for autoregressive VLA models." name="description"/>
+  <link href="assets/style.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <header class="masthead">
+   <nav aria-label="Sections">
+    <a href="#abstract">
+     Abstract
+    </a>
+    <a href="#key-insight">
+     Key Insight
+    </a>
+    <a href="#libero">
+     LIBERO
+    </a>
+    <a href="#simpler">
+     SimplerEnv
+    </a>
+    <a href="#arena">
+     VLA-Arena
+    </a>
+   </nav>
+  </header>
+  <main>
+   <section class="intro" id="abstract">
+    <div class="institution-brand">
+     <div class="brand-crop">
+      <img alt="DeepCybo" height="470" src="assets/institution-logo.png" width="6217"/>
+     </div>
+     <div class="institution-names">
+      <span>
+       Zhongguancun Academy
+      </span>
+      <span>
+       Zhongguancun Institute of Artificial Intelligence
+      </span>
+     </div>
+    </div>
+    <h1>
+     <span class="project-name">
+      ActionPiece
+     </span>
+     Rethinking Action Tokenization for
+     <br class="desktop"/>
+     Autoregressive Vision-Language-Action Models
+    </h1>
+    <div aria-label="Project resources" class="publication-links">
+     <button disabled="" type="button">
+      <svg aria-hidden="true" viewbox="0 0 24 24">
+       <path d="m8 6-6 6 6 6m8-12 6 6-6 6m-3-15-2 18">
+       </path>
+      </svg>
+      <span>
+       Code
+      </span>
+      <span class="coming-soon">
+       Coming Soon
+      </span>
+     </button>
+     <button disabled="" type="button">
+      <svg aria-hidden="true" viewbox="0 0 24 24">
+       <path d="M14 2H5v20h14V7zM14 2v6h5M8 12h8M8 16h8">
+       </path>
+      </svg>
+      <span>
+       Paper
+      </span>
+      <span class="coming-soon">
+       Coming Soon
+      </span>
+     </button>
+     <button disabled="" type="button">
+      <svg aria-hidden="true" viewbox="0 0 24 24">
+       <path d="m12 2 10 5v10l-10 5-10-5V7zm0 10 10-5M12 12 2 7m10 5v10">
+       </path>
+      </svg>
+      <span>
+       Model
+      </span>
+      <span class="coming-soon">
+       Coming Soon
+      </span>
+     </button>
+    </div>
+    <div class="abstract">
+     <h2>
+      Abstract
+     </h2>
+     <p>
+      Action tokenizers define the action representations learned by autoregressive vision-language-action models. Reconstruction accuracy measures the fidelity of individual actions, while their physical relationships provide structure for learning across demonstrations. We introduce physical rank consistency (PRC) to measure neighborhood-order preservation through encoding and decoding, providing a common evaluation across token vocabularies and decoder architectures. Guided by this perspective, we develop ActionPiece, which jointly augments reconstruction with physical rank preservation in learned representations and quantization regularization over codeword assignments. Under the same Qwen3-VL-4B policy training setup, ActionPiece achieves 94.8% on LIBERO and 68.8% on unseen LIBERO-Plus. Component ablations improve both PRC and policy success, with the two objectives together performing best. Replacing the action tokenizer also achieves 71.9% on SimplerEnv and 51.5% mean success across VLA-Arena L0–L2 with standard next-token prediction. These results support physical relationship supervision as a useful principle for learning action representations for control.
+     </p>
+     <p class="adoption-note">
+      <a href="https://huggingface.co/collections/DeepCybo/physbrain-15">
+       PhysBrain1.5
+      </a>
+      uses ActionPiece as its action tokenizer.
+     </p>
+    </div>
+   </section>
+   <section id="key-insight">
+    <div class="section-heading">
+     <h2>
+      Beyond reconstruction fidelity:
+      <br/>
+      preserving physical relationships.
+     </h2>
+    </div>
+    <figure>
+     <img alt="Figure 1: reconstruction fidelity and PRC versus policy success, across 55 evaluations; Spearman correlations 0.544 and 0.681." src="assets/fig1.png"/>
+     <figcaption>
+      Physical rank consistency (PRC) measures how well tokenization preserves the neighborhood ordering of actions. Figure 1 compares reconstruction fidelity and PRC with policy success across 55 tokenizer–benchmark evaluations. Ranks are normalized within comparison groups; color denotes the benchmark. These descriptive associations motivate preserving physical relationships alongside accurate reconstruction. The right panel shows the matched LIBERO-Plus comparison.
+     </figcaption>
+    </figure>
+   </section>
+   <section id="libero">
+    <div class="section-heading">
+     <h2>
+      LIBERO
+      <span class="muted">
+       &amp; LIBERO-Plus
+      </span>
+     </h2>
+     <p>
+      In-distribution task performance and generalization to seven types of perturbations.
+     </p>
+    </div>
+    <div class="chart-pair">
+     <article>
+      <div class="chart-heading">
+       <h3>
+        LIBERO
+       </h3>
+       <span>
+        Overall success ↑
+       </span>
+      </div>
+      <div class="bars">
+       <div class="bar-row ours">
+        <span class="bar-label">
+         ActionPiece (Ours)
+        </span>
+        <div class="track">
+         <span style="width:94.8%">
+         </span>
+        </div>
+        <strong>
+         94.8
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         ActionCodec
+        </span>
+        <div class="track">
+         <span style="width:93.7%">
+         </span>
+        </div>
+        <strong>
+         93.7
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         FAST
+        </span>
+        <div class="track">
+         <span style="width:92.1%">
+         </span>
+        </div>
+        <strong>
+         92.1
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         FASTerVQ*
+        </span>
+        <div class="track">
+         <span style="width:91.3%">
+         </span>
+        </div>
+        <strong>
+         91.3
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         Standard RVQ
+        </span>
+        <div class="track">
+         <span style="width:90.9%">
+         </span>
+        </div>
+        <strong>
+         90.9
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         OAT
+        </span>
+        <div class="track">
+         <span style="width:86.1%">
+         </span>
+        </div>
+        <strong>
+         86.1
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+      </div>
+     </article>
+     <article>
+      <div class="chart-heading">
+       <h3>
+        LIBERO-Plus
+       </h3>
+       <span>
+        Overall success ↑
+       </span>
+      </div>
+      <div class="bars">
+       <div class="bar-row ours">
+        <span class="bar-label">
+         ActionPiece (Ours)
+        </span>
+        <div class="track">
+         <span style="width:68.8%">
+         </span>
+        </div>
+        <strong>
+         68.8
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         FAST
+        </span>
+        <div class="track">
+         <span style="width:64.3%">
+         </span>
+        </div>
+        <strong>
+         64.3
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         ActionCodec
+        </span>
+        <div class="track">
+         <span style="width:64.2%">
+         </span>
+        </div>
+        <strong>
+         64.2
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         FASTerVQ*
+        </span>
+        <div class="track">
+         <span style="width:62.6%">
+         </span>
+        </div>
+        <strong>
+         62.6
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         OAT
+        </span>
+        <div class="track">
+         <span style="width:60.7%">
+         </span>
+        </div>
+        <strong>
+         60.7
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         Standard RVQ
+        </span>
+        <div class="track">
+         <span style="width:60.4%">
+         </span>
+        </div>
+        <strong>
+         60.4
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+      </div>
+     </article>
+    </div>
+    <h3 class="table-title">
+     LIBERO · success rate (%)
+    </h3>
+    <div aria-label="Benchmark results" class="table-scroll" role="region" tabindex="0">
+     <table>
+      <thead>
+       <tr>
+        <th scope="col">
+         Tokenizer
+        </th>
+        <th scope="col">
+         Spatial
+        </th>
+        <th scope="col">
+         Object
+        </th>
+        <th scope="col">
+         Goal
+        </th>
+        <th scope="col">
+         Long
+        </th>
+        <th scope="col">
+         Overall
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr class="">
+        <th scope="row">
+         ActionCodec
+        </th>
+        <td>
+         93.4
+        </td>
+        <td>
+         99.0
+        </td>
+        <td>
+         92.4
+        </td>
+        <td>
+         89.8
+        </td>
+        <td>
+         93.7
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         OAT
+        </th>
+        <td>
+         85.6
+        </td>
+        <td>
+         96.2
+        </td>
+        <td>
+         87.2
+        </td>
+        <td>
+         75.2
+        </td>
+        <td>
+         86.1
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         FASTerVQ*
+        </th>
+        <td>
+         91.8
+        </td>
+        <td>
+         95.6
+        </td>
+        <td>
+         90.5
+        </td>
+        <td>
+         87.4
+        </td>
+        <td>
+         91.3
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         FAST
+        </th>
+        <td>
+         94.7
+        </td>
+        <td>
+         98.0
+        </td>
+        <td>
+         93.1
+        </td>
+        <td>
+         82.6
+        </td>
+        <td>
+         92.1
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Standard RVQ
+        </th>
+        <td>
+         91.8
+        </td>
+        <td>
+         98.2
+        </td>
+        <td>
+         91.6
+        </td>
+        <td>
+         82.0
+        </td>
+        <td>
+         90.9
+        </td>
+       </tr>
+       <tr class="ours">
+        <th scope="row">
+         ActionPiece (Ours)
+        </th>
+        <td>
+         96.2
+        </td>
+        <td>
+         99.0
+        </td>
+        <td>
+         93.4
+        </td>
+        <td>
+         90.6
+        </td>
+        <td>
+         94.8
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <h3 class="table-title">
+     LIBERO-Plus · success rate (%)
+    </h3>
+    <div aria-label="Benchmark results" class="table-scroll" role="region" tabindex="0">
+     <table>
+      <thead>
+       <tr>
+        <th scope="col">
+         Tokenizer
+        </th>
+        <th scope="col">
+         Camera
+        </th>
+        <th scope="col">
+         Robot
+        </th>
+        <th scope="col">
+         Language
+        </th>
+        <th scope="col">
+         Light
+        </th>
+        <th scope="col">
+         Background
+        </th>
+        <th scope="col">
+         Noise
+        </th>
+        <th scope="col">
+         Layout
+        </th>
+        <th scope="col">
+         Overall
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr class="">
+        <th scope="row">
+         ActionCodec
+        </th>
+        <td>
+         33.3
+        </td>
+        <td>
+         38.8
+        </td>
+        <td>
+         80.8
+        </td>
+        <td>
+         88.4
+        </td>
+        <td>
+         90.2
+        </td>
+        <td>
+         58.0
+        </td>
+        <td>
+         75.9
+        </td>
+        <td>
+         64.2
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         OAT
+        </th>
+        <td>
+         32.2
+        </td>
+        <td>
+         47.8
+        </td>
+        <td>
+         79.5
+        </td>
+        <td>
+         82.8
+        </td>
+        <td>
+         82.7
+        </td>
+        <td>
+         46.4
+        </td>
+        <td>
+         67.4
+        </td>
+        <td>
+         60.7
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         FASTerVQ*
+        </th>
+        <td>
+         39.0
+        </td>
+        <td>
+         42.3
+        </td>
+        <td>
+         74.5
+        </td>
+        <td>
+         85.8
+        </td>
+        <td>
+         84.9
+        </td>
+        <td>
+         56.6
+        </td>
+        <td>
+         69.0
+        </td>
+        <td>
+         62.6
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         FAST
+        </th>
+        <td>
+         33.8
+        </td>
+        <td>
+         47.1
+        </td>
+        <td>
+         80.0
+        </td>
+        <td>
+         89.6
+        </td>
+        <td>
+         88.4
+        </td>
+        <td>
+         51.3
+        </td>
+        <td>
+         75.9
+        </td>
+        <td>
+         64.3
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Standard RVQ
+        </th>
+        <td>
+         31.5
+        </td>
+        <td>
+         43.9
+        </td>
+        <td>
+         75.3
+        </td>
+        <td>
+         86.0
+        </td>
+        <td>
+         88.0
+        </td>
+        <td>
+         42.5
+        </td>
+        <td>
+         72.9
+        </td>
+        <td>
+         60.4
+        </td>
+       </tr>
+       <tr class="ours">
+        <th scope="row">
+         ActionPiece (Ours)
+        </th>
+        <td>
+         45.1
+        </td>
+        <td>
+         49.6
+        </td>
+        <td>
+         82.2
+        </td>
+        <td>
+         91.9
+        </td>
+        <td>
+         91.4
+        </td>
+        <td>
+         57.6
+        </td>
+        <td>
+         78.0
+        </td>
+        <td>
+         68.8
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="note">
+     All policies use the same Qwen3-VL-4B backbone and matched policy-training setup. LIBERO-Plus demonstrations are excluded from policy training. FASTerVQ* denotes our implementation following the published method. Values follow the paper tables and are displayed to one decimal place.
+    </p>
+   </section>
+   <section id="simpler">
+    <div class="section-heading">
+     <h2>
+      SimplerEnv
+     </h2>
+     <p>
+      Real-to-sim evaluation of a WidowX policy trained on real-world demonstrations.
+     </p>
+    </div>
+    <div class="result-callout">
+     <div>
+      <span class="metric">
+       71.9
+       <small>
+        %
+       </small>
+      </span>
+      <span>
+       ActionPiece · average success
+      </span>
+     </div>
+     <p>
+      Four manipulation tasks:
+      <br/>
+      Put Spoon, Put Carrot, Stack Block, Put Eggplant.
+     </p>
+    </div>
+    <div aria-label="Benchmark results" class="table-scroll" role="region" tabindex="0">
+     <table>
+      <thead>
+       <tr>
+        <th scope="col">
+         Model
+        </th>
+        <th scope="col">
+         Put Spoon
+        </th>
+        <th scope="col">
+         Put Carrot
+        </th>
+        <th scope="col">
+         Stack Block
+        </th>
+        <th scope="col">
+         Put Eggplant
+        </th>
+        <th scope="col">
+         Avg.
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr class="">
+        <th scope="row">
+         RT-1-X
+        </th>
+        <td>
+         0.0
+        </td>
+        <td>
+         4.2
+        </td>
+        <td>
+         0.0
+        </td>
+        <td>
+         0.0
+        </td>
+        <td>
+         1.1
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Octo-Base
+        </th>
+        <td>
+         0.0
+        </td>
+        <td>
+         12.5
+        </td>
+        <td>
+         15.8
+        </td>
+        <td>
+         41.7
+        </td>
+        <td>
+         17.5
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Octo-Small
+        </th>
+        <td>
+         0.0
+        </td>
+        <td>
+         8.2
+        </td>
+        <td>
+         41.7
+        </td>
+        <td>
+         56.7
+        </td>
+        <td>
+         26.7
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         OpenVLA-OFT
+        </th>
+        <td>
+         34.2
+        </td>
+        <td>
+         30.0
+        </td>
+        <td>
+         30.0
+        </td>
+        <td>
+         72.5
+        </td>
+        <td>
+         41.8
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         RoboVLM
+        </th>
+        <td>
+         50.0
+        </td>
+        <td>
+         37.5
+        </td>
+        <td>
+         0.0
+        </td>
+        <td>
+         83.3
+        </td>
+        <td>
+         42.7
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Magma
+        </th>
+        <td>
+         37.5
+        </td>
+        <td>
+         29.2
+        </td>
+        <td>
+         20.8
+        </td>
+        <td>
+         91.7
+        </td>
+        <td>
+         44.8
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         CogACT
+        </th>
+        <td>
+         71.7
+        </td>
+        <td>
+         50.8
+        </td>
+        <td>
+         15.0
+        </td>
+        <td>
+         67.5
+        </td>
+        <td>
+         51.3
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         SpatialVLA
+        </th>
+        <td>
+         20.8
+        </td>
+        <td>
+         20.8
+        </td>
+        <td>
+         25.0
+        </td>
+        <td>
+         70.8
+        </td>
+        <td>
+         34.4
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         TraceVLA
+        </th>
+        <td>
+         12.5
+        </td>
+        <td>
+         16.6
+        </td>
+        <td>
+         16.6
+        </td>
+        <td>
+         65.0
+        </td>
+        <td>
+         27.7
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         VideoVLA
+        </th>
+        <td>
+         75.0
+        </td>
+        <td>
+         20.8
+        </td>
+        <td>
+         45.8
+        </td>
+        <td>
+         70.8
+        </td>
+        <td>
+         53.1
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         π₀
+        </th>
+        <td>
+         29.2
+        </td>
+        <td>
+         62.5
+        </td>
+        <td>
+         29.2
+        </td>
+        <td>
+         91.6
+        </td>
+        <td>
+         53.1
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         π₀.₅
+        </th>
+        <td>
+         49.3
+        </td>
+        <td>
+         64.7
+        </td>
+        <td>
+         44.7
+        </td>
+        <td>
+         69.7
+        </td>
+        <td>
+         57.1
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Isaac-GR00T-N1.6-Bridge
+        </th>
+        <td>
+         64.5
+        </td>
+        <td>
+         65.5
+        </td>
+        <td>
+         5.5
+        </td>
+        <td>
+         93.0
+        </td>
+        <td>
+         57.1
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         LangForce
+        </th>
+        <td>
+         89.6
+        </td>
+        <td>
+         63.8
+        </td>
+        <td>
+         33.3
+        </td>
+        <td>
+         79.2
+        </td>
+        <td>
+         66.5
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         ActionCodec-BAR
+        </th>
+        <td>
+         71.7
+        </td>
+        <td>
+         64.2
+        </td>
+        <td>
+         55.0
+        </td>
+        <td>
+         70.0
+        </td>
+        <td>
+         65.2
+        </td>
+       </tr>
+       <tr class="ours">
+        <th scope="row">
+         ActionPiece (Ours)
+        </th>
+        <td>
+         83.3
+        </td>
+        <td>
+         54.2
+        </td>
+        <td>
+         58.3
+        </td>
+        <td>
+         91.7
+        </td>
+        <td>
+         71.9
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="note">
+     We follow the official SimplerEnv evaluation protocol, averaging five independent 24-episode repeats per task and then the four task scores. ActionPiece achieves the best average among the listed methods, with strengths varying across tasks. It uses standard next-token prediction with the action tokenizer replaced, without benchmark-specific changes to the policy architecture.
+    </p>
+   </section>
+   <section id="arena">
+    <div class="section-heading">
+     <h2>
+      VLA-Arena
+     </h2>
+     <p>
+      Train on L0 and evaluate across L0–L2: safety, distractors, extrapolation and long-horizon tasks.
+     </p>
+    </div>
+    <div class="chart-pair arena-overview">
+     <article>
+      <div class="chart-heading">
+       <h3>
+        Across all levels
+       </h3>
+       <span>
+        Mean success ↑
+       </span>
+      </div>
+      <div class="bars">
+       <div class="bar-row ours">
+        <span class="bar-label">
+         ActionPiece
+        </span>
+        <div class="track">
+         <span style="width:51.5%">
+         </span>
+        </div>
+        <strong>
+         51.5
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         π₀.₅
+        </span>
+        <div class="track">
+         <span style="width:41.5%">
+         </span>
+        </div>
+        <strong>
+         41.5
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         Evo-Depth
+        </span>
+        <div class="track">
+         <span style="width:41.1%">
+         </span>
+        </div>
+        <strong>
+         41.1
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         Motus
+        </span>
+        <div class="track">
+         <span style="width:38.9%">
+         </span>
+        </div>
+        <strong>
+         38.9
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         Qwen-GR00T
+        </span>
+        <div class="track">
+         <span style="width:37.6%">
+         </span>
+        </div>
+        <strong>
+         37.6
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+       <div class="bar-row">
+        <span class="bar-label">
+         GR00T-N1.6
+        </span>
+        <div class="track">
+         <span style="width:27.8%">
+         </span>
+        </div>
+        <strong>
+         27.8
+         <small>
+          %
+         </small>
+        </strong>
+       </div>
+      </div>
+     </article>
+     <article>
+      <div class="chart-heading">
+       <h3>
+        By difficulty
+       </h3>
+       <span>
+        Success rate (%) ↑
+       </span>
+      </div>
+      <div aria-label="Benchmark results" class="table-scroll" role="region" tabindex="0">
+       <table>
+        <thead>
+         <tr>
+          <th scope="col">
+           Model
+          </th>
+          <th scope="col">
+           L0
+          </th>
+          <th scope="col">
+           L1
+          </th>
+          <th scope="col">
+           L2
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr class="">
+          <th scope="row">
+           π₀.₅
+          </th>
+          <td>
+           64.3
+          </td>
+          <td>
+           35.6
+          </td>
+          <td>
+           24.5
+          </td>
+         </tr>
+         <tr class="">
+          <th scope="row">
+           GR00T-N1.6
+          </th>
+          <td>
+           50.3
+          </td>
+          <td>
+           23.6
+          </td>
+          <td>
+           9.5
+          </td>
+         </tr>
+         <tr class="">
+          <th scope="row">
+           Qwen-GR00T
+          </th>
+          <td>
+           76.9
+          </td>
+          <td>
+           23.5
+          </td>
+          <td>
+           12.5
+          </td>
+         </tr>
+         <tr class="">
+          <th scope="row">
+           Evo-Depth
+          </th>
+          <td>
+           75.0
+          </td>
+          <td>
+           31.6
+          </td>
+          <td>
+           16.7
+          </td>
+         </tr>
+         <tr class="">
+          <th scope="row">
+           Motus
+          </th>
+          <td>
+           60.1
+          </td>
+          <td>
+           35.7
+          </td>
+          <td>
+           20.9
+          </td>
+         </tr>
+         <tr class="ours">
+          <th scope="row">
+           ActionPiece
+          </th>
+          <td>
+           82.2
+          </td>
+          <td>
+           42.7
+          </td>
+          <td>
+           29.5
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+     </article>
+    </div>
+    <h3 class="table-title">
+     Task success (%) · L0 / L1 / L2
+    </h3>
+    <div aria-label="Benchmark results" class="table-scroll" role="region" tabindex="0">
+     <table>
+      <thead>
+       <tr>
+        <th scope="col">
+         Task
+        </th>
+        <th scope="col">
+         π₀.₅
+        </th>
+        <th scope="col">
+         GR00T-N1.6
+        </th>
+        <th scope="col">
+         Qwen-GR00T
+        </th>
+        <th scope="col">
+         Evo-Depth
+        </th>
+        <th scope="col">
+         Motus
+        </th>
+        <th scope="col">
+         ActionPiece
+        </th>
+       </tr>
+      </thead>
+      <tbody>
+       <tr class="">
+        <th scope="row">
+         Static obstacles
+        </th>
+        <td>
+         90.0 / 62.0 / 40.0
+        </td>
+        <td>
+         72.0 / 30.0 / 14.0
+        </td>
+        <td>
+         91.0 / 18.0 / 5.0
+        </td>
+        <td>
+         88.0 / 66.0 / 48.0
+        </td>
+        <td>
+         64.0 / 67.0 / 41.0
+        </td>
+        <td>
+         91.0 / 83.0 / 57.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Cautious grasp
+        </th>
+        <td>
+         50.0 / 14.0 / 0.0
+        </td>
+        <td>
+         16.0 / 2.0 / 0.0
+        </td>
+        <td>
+         77.0 / 8.0 / 2.0
+        </td>
+        <td>
+         78.0 / 24.0 / 0.0
+        </td>
+        <td>
+         62.0 / 25.0 / 11.0
+        </td>
+        <td>
+         77.0 / 18.0 / 1.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Hazard avoidance
+        </th>
+        <td>
+         58.0 / 30.0 / 36.0
+        </td>
+        <td>
+         64.0 / 4.0 / 10.0
+        </td>
+        <td>
+         67.0 / 15.0 / 19.0
+        </td>
+        <td>
+         40.0 / 0.0 / 14.0
+        </td>
+        <td>
+         65.0 / 34.0 / 21.0
+        </td>
+        <td>
+         68.0 / 22.0 / 46.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         State preservation
+        </th>
+        <td>
+         58.0 / 56.0 / 54.0
+        </td>
+        <td>
+         66.0 / 50.0 / 38.0
+        </td>
+        <td>
+         86.0 / 56.0 / 47.0
+        </td>
+        <td>
+         88.0 / 66.0 / 56.0
+        </td>
+        <td>
+         63.0 / 63.0 / 72.0
+        </td>
+        <td>
+         94.0 / 80.0 / 64.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Dynamic obstacles
+        </th>
+        <td>
+         50.0 / 44.0 / 22.0
+        </td>
+        <td>
+         74.0 / 50.0 / 2.0
+        </td>
+        <td>
+         81.0 / 56.0 / 3.0
+        </td>
+        <td>
+         82.0 / 60.0 / 6.0
+        </td>
+        <td>
+         58.0 / 33.0 / 11.0
+        </td>
+        <td>
+         82.0 / 76.0 / 27.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Static distractors
+        </th>
+        <td>
+         88.0 / 16.0 / 16.0
+        </td>
+        <td>
+         46.0 / 32.0 / 6.0
+        </td>
+        <td>
+         91.0 / 6.0 / 2.0
+        </td>
+        <td>
+         94.0 / 20.0 / 24.0
+        </td>
+        <td>
+         69.0 / 19.0 / 13.0
+        </td>
+        <td>
+         92.0 / 21.0 / 22.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Dynamic distractors
+        </th>
+        <td>
+         80.0 / 66.0 / 54.0
+        </td>
+        <td>
+         70.0 / 72.0 / 18.0
+        </td>
+        <td>
+         92.0 / 49.0 / 25.0
+        </td>
+        <td>
+         86.0 / 60.0 / 32.0
+        </td>
+        <td>
+         77.0 / 51.0 / 26.0
+        </td>
+        <td>
+         90.0 / 63.0 / 43.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Prep. combinations
+        </th>
+        <td>
+         62.0 / 24.0 / 6.0
+        </td>
+        <td>
+         48.0 / 0.0 / 0.0
+        </td>
+        <td>
+         51.0 / 1.0 / 0.0
+        </td>
+        <td>
+         66.0 / 0.0 / 0.0
+        </td>
+        <td>
+         41.0 / 7.0 / 1.0
+        </td>
+        <td>
+         69.0 / 15.0 / 0.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Task workflows
+        </th>
+        <td>
+         38.0 / 20.0 / 22.0
+        </td>
+        <td>
+         42.0 / 0.0 / 0.0
+        </td>
+        <td>
+         51.0 / 3.0 / 9.0
+        </td>
+        <td>
+         32.0 / 0.0 / 0.0
+        </td>
+        <td>
+         38.0 / 25.0 / 14.0
+        </td>
+        <td>
+         64.0 / 33.0 / 21.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Unseen objects
+        </th>
+        <td>
+         48.0 / 60.0 / 20.0
+        </td>
+        <td>
+         26.0 / 18.0 / 16.0
+        </td>
+        <td>
+         63.0 / 46.0 / 26.0
+        </td>
+        <td>
+         78.0 / 52.0 / 4.0
+        </td>
+        <td>
+         63.0 / 65.0 / 19.0
+        </td>
+        <td>
+         78.0 / 59.0 / 43.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Long horizon
+        </th>
+        <td>
+         85.0 / 0.0 / 0.0
+        </td>
+        <td>
+         29.0 / 2.0 / 0.0
+        </td>
+        <td>
+         96.0 / 0.0 / 0.0
+        </td>
+        <td>
+         93.0 / 0.0 / 0.0
+        </td>
+        <td>
+         61.0 / 4.0 / 1.0
+        </td>
+        <td>
+         99.0 / 0.0 / 0.0
+        </td>
+       </tr>
+       <tr class="">
+        <th scope="row">
+         Avg
+        </th>
+        <td>
+         64.3 / 35.6 / 24.5
+        </td>
+        <td>
+         50.3 / 23.6 / 9.5
+        </td>
+        <td>
+         76.9 / 23.5 / 12.5
+        </td>
+        <td>
+         75.0 / 31.6 / 16.7
+        </td>
+        <td>
+         60.1 / 35.7 / 20.9
+        </td>
+        <td>
+         82.2 / 42.7 / 29.5
+        </td>
+       </tr>
+      </tbody>
+     </table>
+    </div>
+    <p class="note">
+     Avg equally weights the 11 task suites at each level; the overall mean equally weights all 33 suite–level results. ActionPiece achieves the best aggregate success among the listed methods, while individual task strengths vary. The policy uses standard next-token prediction with ActionPiece as its tokenizer, without benchmark-specific architectural changes. Qwen-GR00T denotes Qwen3-VL with the GR00T N1 action head.
+    </p>
+   </section>
+  </main>
+  <footer>
+   ActionPiece
+   <span>
+    Benchmark results
+   </span>
+  </footer>
+ </body>
+</html>
