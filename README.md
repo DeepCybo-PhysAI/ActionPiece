@@ -28,6 +28,3 @@ Action tokenizers define the action representations learned by autoregressive vi
 
 The project page contains the full comparisons. LIBERO-Plus is evaluated without its demonstrations in policy training. SimplerEnv scores average five independent 24-episode repeats per task. VLA-Arena averages the 11 suites equally at each level.
 
-## Key insight
-
-PRC measures neighborhood-order preservation through encoding and decoding. The project figure compares fidelity and PRC with policy success using within-group ranks across 55 tokenizer–benchmark evaluations, and presents a matched LIBERO-Plus comparison.
