@@ -1,8 +1,14 @@
-# ActionPiece
-
-Rethinking Action Tokenization for Autoregressive Vision-Language-Action Models
-
-[Project page](https://deepcybo-physai.github.io/ActionPiece/)
+<div align="center">
+<h1>ActionPiece</h1>
+<p><b>Rethinking Action Tokenization for Autoregressive Vision-Language-Action Models</b></p>
+<p>
+<a href="https://arxiv.org/pdf/2609.xxxxx"><img src="https://img.shields.io/badge/Paper-arXiv%20Coming%20Soon-B31B1B?logo=arxiv&amp;style=for-the-badge" alt="ActionPiece Paper — arXiv coming soon"></a>
+<a href="https://deepcybo-physai.github.io/ActionPiece/"><img src="https://img.shields.io/badge/Project%20Page-ActionPiece-4285F4?style=for-the-badge" alt="ActionPiece Project Page"></a>
+<a href="https://deepcybo-physai.github.io/PhysBrain-1.5/"><img src="https://img.shields.io/badge/Project%20Page-PhysBrain%201.5-5865F2?style=for-the-badge" alt="PhysBrain 1.5 Project Page"></a>
+</p>
+<p><img src="docs/assets/institution-logo.png" alt="DeepCybo, Zhongguancun Academy, and Zhongguancun Institute of Artificial Intelligence" width="800"></p>
+<!-- Replace the placeholder arXiv ID 2609.xxxxx when the paper is available. -->
+</div>
 
 ## Abstract
 
