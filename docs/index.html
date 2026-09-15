@@ -19,6 +19,9 @@
     <a href="#key-insight">
      Key Insight
     </a>
+    <a href="#architecture">
+     Architecture
+    </a>
     <a href="#libero">
      LIBERO
     </a>
@@ -118,6 +121,21 @@
      <img alt="Figure 1: reconstruction fidelity and PRC versus policy success, across 55 evaluations; Spearman correlations 0.544 and 0.681." src="assets/fig1.png"/>
      <figcaption>
       Physical rank consistency (PRC) measures how well tokenization preserves the neighborhood ordering of actions. Figure 1 compares reconstruction fidelity and PRC with policy success across 55 tokenizer–benchmark evaluations. Ranks are normalized within comparison groups; color denotes the benchmark. These descriptive associations motivate preserving physical relationships alongside accurate reconstruction. The right panel shows the matched LIBERO-Plus comparison.
+     </figcaption>
+    </figure>
+   </section>
+   <section id="architecture">
+    <div class="section-heading">
+     <h2>ActionPiece Architecture</h2>
+     <p>Physical relationship supervision for action tokenization and autoregressive policy learning.</p>
+    </div>
+    <figure>
+     <a href="assets/actionpiece-architecture.pdf" aria-label="View the ActionPiece architecture as a full-resolution PDF">
+      <img src="assets/actionpiece-architecture.png" width="2700" height="1276" loading="lazy" alt="ActionPiece pipeline: physical action neighborhoods supervise encoder and quantized features through PRP and codeword assignment distributions through QR; the frozen tokenizer supports autoregressive VLA training and action decoding."/>
+     </a>
+     <figcaption>
+      Physical action distance combines translation, rotation, and gripper differences to select near and far action chunks. The tokenizer maps each eight-step chunk to 16 discrete tokens. Alongside reconstruction, physical rank preservation (PRP) encourages near–far ordering in encoder and quantized feature distances, while quantization regularization (QR) encourages the same ordering in the Jensen–Shannon divergence between codeword assignment distributions. The frozen tokenizer provides targets for autoregressive VLA training, and its decoder converts predicted tokens into executable action chunks.
+      <a href="assets/actionpiece-architecture.pdf" style="color:#3b5db3;text-decoration:underline;text-underline-offset:3px">View full-resolution PDF</a>.
      </figcaption>
     </figure>
    </section>
