@@ -8,7 +8,7 @@
    ActionPiece
   </title>
   <meta content="ActionPiece: physical rank consistency and structure-preserving action tokenization for autoregressive VLA models." name="description"/>
-  <link href="assets/style.css?v=20260914-buttons" rel="stylesheet"/>
+  <link href="assets/style.css?v=20260917-paper" rel="stylesheet"/>
  </head>
  <body>
   <header class="masthead">
@@ -65,11 +65,8 @@
       <span>
        Code
       </span>
-      <span class="coming-soon">
-       Coming Soon
-      </span>
      </a>
-     <button disabled="" type="button">
+     <a class="resource-link" href="https://arxiv.org/abs/2609.18487">
       <svg aria-hidden="true" viewbox="0 0 24 24">
        <path d="M14 2H5v20h14V7zM14 2v6h5M8 12h8M8 16h8">
        </path>
@@ -77,10 +74,7 @@
       <span>
        Paper
       </span>
-      <span class="coming-soon">
-       Coming Soon
-      </span>
-     </button>
+     </a>
      <button disabled="" type="button">
       <svg aria-hidden="true" viewbox="0 0 24 24">
        <path d="m12 2 10 5v10l-10 5-10-5V7zm0 10 10-5M12 12 2 7m10 5v10">
@@ -1677,6 +1671,19 @@
     <p class="note">
      Avg equally weights the 11 task suites at each level; the overall mean equally weights all 33 suite–level results. ActionPiece achieves the best aggregate success among the listed methods, while individual task strengths vary. The policy uses standard next-token prediction with ActionPiece as its tokenizer, without benchmark-specific architectural changes. Qwen-GR00T denotes Qwen3-VL with the GR00T N1 action head.
     </p>
+   </section>
+   <section id="citation">
+    <div class="section-heading"><h2>Citation</h2></div>
+    <p>If you find ActionPiece useful in your research, please cite our paper.</p>
+    <pre class="citation-code"><code>@misc{lian2026actionpiece,
+  title={ActionPiece: Rethinking Action Tokenization for Autoregressive Vision-Language-Action Models},
+  author={Shijie Lian and Bin Yu and Zhaolong Shen and Xiaopeng Lin and Yichao Du and Zhirui Zhang and Laurence T. Yang and Kai Chen},
+  year={2026},
+  eprint={2609.18487},
+  archivePrefix={arXiv},
+  primaryClass={cs.RO},
+  url={https://arxiv.org/abs/2609.18487}
+}</code></pre>
    </section>
   </main>
   <footer>

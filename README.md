@@ -2,12 +2,11 @@
 <h1>ActionPiece</h1>
 <p><b>Rethinking Action Tokenization for Autoregressive Vision-Language-Action Models</b></p>
 <p>
-<a href="https://arxiv.org/pdf/2609.xxxxx"><img src="https://img.shields.io/badge/Paper-arXiv%20Coming%20Soon-B31B1B?logo=arxiv&amp;style=for-the-badge" alt="ActionPiece Paper — arXiv coming soon"></a>
+<a href="https://arxiv.org/abs/2609.18487"><img src="https://img.shields.io/badge/Paper-arXiv%202609.18487-B31B1B?logo=arxiv&amp;style=for-the-badge" alt="ActionPiece Paper — arXiv:2609.18487"></a>
 <a href="https://deepcybo-physai.github.io/ActionPiece/"><img src="https://img.shields.io/badge/Project%20Page-ActionPiece-4285F4?style=for-the-badge" alt="ActionPiece Project Page"></a>
 <a href="https://deepcybo-physai.github.io/PhysBrain-1.5/"><img src="https://img.shields.io/badge/Project%20Page-PhysBrain%201.5-5865F2?style=for-the-badge" alt="PhysBrain 1.5 Project Page"></a>
 </p>
 <p><img src="docs/assets/institution-logo.png" alt="DeepCybo, Zhongguancun Academy, and Zhongguancun Institute of Artificial Intelligence" width="800"></p>
-<!-- Replace the placeholder arXiv ID 2609.xxxxx when the paper is available. -->
 </div>
 
 ## Abstract
@@ -28,3 +27,18 @@ Action tokenizers define the action representations learned by autoregressive vi
 
 The project page contains the full comparisons. LIBERO-Plus is evaluated without its demonstrations in policy training. SimplerEnv scores average five independent 24-episode repeats per task. VLA-Arena averages the 11 suites equally at each level.
 
+## Citation
+
+If you find ActionPiece useful in your research, please cite our paper.
+
+```bibtex
+@misc{lian2026actionpiece,
+  title={ActionPiece: Rethinking Action Tokenization for Autoregressive Vision-Language-Action Models},
+  author={Shijie Lian and Bin Yu and Zhaolong Shen and Xiaopeng Lin and Yichao Du and Zhirui Zhang and Laurence T. Yang and Kai Chen},
+  year={2026},
+  eprint={2609.18487},
+  archivePrefix={arXiv},
+  primaryClass={cs.RO},
+  url={https://arxiv.org/abs/2609.18487}
+}
+```

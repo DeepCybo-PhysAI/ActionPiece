@@ -7,3 +7,5 @@
 
 .adoption-note{margin-top:18px!important}.adoption-note a{color:#3b5db3;text-decoration:underline;text-underline-offset:3px}
 .publication-links .resource-link{cursor:pointer}
+
+.citation-code{background:#f6f8fc;border:1px solid #e1e6ed;border-radius:6px;padding:24px;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;text-align:left}.citation-code code{font-family:Consolas,Monaco,monospace}
